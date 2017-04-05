@@ -1,0 +1,27 @@
+{
+  "name": "nodesplider",
+  "version": "1.0.0",
+  "description": "使用cheerio，superagent搭建的nodejs爬虫程序",
+  "main": "splider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zybbyzaa/nodeSplider.git"
+  },
+  "author": "zyb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zybbyzaa/nodeSplider/issues"
+  },
+  "homepage": "https://github.com/zybbyzaa/nodeSplider#readme",
+  "dependencies": {
+    "async": "^2.3.0",
+    "cheerio": "^0.22.0",
+    "json2csv": "^3.7.3",
+    "superagent": "^3.5.2",
+    "superagent-charset": "^1.1.1",
+    "superagent-retry": "^0.6.0"
+  }
+}
