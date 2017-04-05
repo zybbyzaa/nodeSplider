@@ -9,11 +9,6 @@ var fs  = require('fs');
 charset(request);
 retry(request);
 
-var productList = [];
-var productUrl = [];
-for (var i = 0; i < 1; i++) {
-    productUrl.push("https://list.tmall.com/search_product.htm?q=%CC%E2%BF%E2&s=" + i*60);
-}
 function getProduct(url,cb){
     request
         .agent()
@@ -41,19 +36,53 @@ function getProduct(url,cb){
         });
 }
 
-async.eachSeries(productUrl, function(item, callback) {
-    console.log('开始抓取url：' + item);    
-    getProduct(item, callback);
-}, function(err) {
-    if (err) {
-        return console.log(err);
+function getProductList() {
+    var productList = [];
+    var productUrl = [];
+    for (var i = 0; i < 100; i++) {
+        productUrl.push("https://list.tmall.com/search_product.htm?q=%CC%E2%BF%E2&s=" + i*60);
     }
-    var fields = ['id', 'name', 'price', 'status', 'url'];
-    var csv = json2csv({ data: productList, fields: fields });
-    fs.writeFile('data/productList.csv', csv,  function(err) {
+    async.eachSeries(productUrl, function(item, callback) {
+        console.log('开始抓取url：' + item);    
+        getProduct(item, callback);
+    }, function(err) {
         if (err) {
-            return console.error(err);
+            return console.log(err);
         }
-        console.log(new Date(),"：数据写入成功！");
+        var fields = ['id', 'name', 'price', 'status', 'url'];
+        var csv = json2csv({ data: productList, fields: fields });
+        fs.writeFile('data/productList.csv', csv,  function(err) {
+            if (err) {
+                return console.error(err);
+            }
+            console.log(new Date(),"：数据写入成功！");
+        });
     });
-});
+}
+
+function getCommentList() {
+    var commentList = [];
+    var commentUrl = [];
+    for (var i = 0; i < 1218; i++) {
+        commentUrl.push("https://detail.tmall.com/item.htm?spm=a230r.1.14.1.vo3HJW&id=535389650658&ns=1&abbucket=6");
+    }
+    async.eachSeries(commentUrl, function(item, callback) {
+        console.log('开始抓取url：' + item);    
+        getProduct(item, callback);
+    }, function(err) {
+        if (err) {
+            return console.log(err);
+        }
+        var fields = ['id', 'name', 'price', 'status', 'url'];
+        var csv = json2csv({ data: commentList, fields: fields });
+        fs.writeFile('data/commentList.csv', csv,  function(err) {
+            if (err) {
+                return console.error(err);
+            }
+            console.log(new Date(),"：数据写入成功！");
+        });
+    });
+}
+
+
+
